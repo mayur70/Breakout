@@ -1,13 +1,19 @@
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-namespace Breakout {
-    public class Constants {
+namespace Breakout
+{
+    public class Constants
+    {
 
         public static readonly int VIRTUAL_WIDTH = 432;
         public static readonly int VIRTUAL_HEIGHT = 243;
+
+        public static readonly int PADDLE_SPEED = 200;
         public static SpriteFont G_FONTS_SMALL;
         public static SpriteFont G_FONTS_MEDIUM;
         public static SpriteFont G_FONTS_LARGE;
@@ -33,32 +39,37 @@ namespace Breakout {
         public static SoundEffect G_SOUNDS_PAUSE;
         public static Song G_SOUNDS_MUSIC;
 
-        public static void LoadContent (ContentManager content) {
-            G_FONTS_SMALL = content.Load<SpriteFont> ("fonts/small");
-            G_FONTS_MEDIUM = content.Load<SpriteFont> ("fonts/medium");
-            G_FONTS_LARGE = content.Load<SpriteFont> ("fonts/large");
+        public static List<Rectangle> G_FRAMES_PADDLES;
 
-            G_TEXTURE_BACKGROUND = content.Load<Texture2D> ("graphics/background");
-            G_TEXTURE_MAIN = content.Load<Texture2D> ("graphics/breakout");
-            G_TEXTURE_ARROWS = content.Load<Texture2D> ("graphics/arrows");
-            G_TEXTURE_HEARTS = content.Load<Texture2D> ("graphics/hearts");
-            G_TEXTURE_PARTICLE = content.Load<Texture2D> ("graphics/particle");
+        public static void LoadContent(ContentManager content)
+        {
+            G_FONTS_SMALL = content.Load<SpriteFont>("fonts/small");
+            G_FONTS_MEDIUM = content.Load<SpriteFont>("fonts/medium");
+            G_FONTS_LARGE = content.Load<SpriteFont>("fonts/large");
 
-            G_SOUNDS_PADDLE_HIT = content.Load<SoundEffect> ("sounds/paddle_hit");
-            G_SOUNDS_SCORE = content.Load<SoundEffect> ("sounds/score");
-            G_SOUNDS_WALL_HIT = content.Load<SoundEffect> ("sounds/wall_hit");
-            G_SOUNDS_CONFIRM = content.Load<SoundEffect> ("sounds/confirm");
-            G_SOUNDS_SELECT = content.Load<SoundEffect> ("sounds/select");
-            G_SOUNDS_NO_SELECT = content.Load<SoundEffect> ("sounds/no-select");
-            G_SOUNDS_BRICK_HIT_1 = content.Load<SoundEffect> ("sounds/brick-hit-1");
-            G_SOUNDS_BRICK_HIT_2 = content.Load<SoundEffect> ("sounds/brick-hit-2");
-            G_SOUNDS_HURT = content.Load<SoundEffect> ("sounds/hurt");
-            G_SOUNDS_VICTORY = content.Load<SoundEffect> ("sounds/victory");
-            G_SOUNDS_RECOVER = content.Load<SoundEffect> ("sounds/recover");
-            G_SOUNDS_HIGHT_SCORE = content.Load<SoundEffect> ("sounds/high_score");
-            G_SOUNDS_PAUSE = content.Load<SoundEffect> ("sounds/pause");
+            G_TEXTURE_BACKGROUND = content.Load<Texture2D>("graphics/background");
+            G_TEXTURE_MAIN = content.Load<Texture2D>("graphics/breakout");
+            G_TEXTURE_ARROWS = content.Load<Texture2D>("graphics/arrows");
+            G_TEXTURE_HEARTS = content.Load<Texture2D>("graphics/hearts");
+            G_TEXTURE_PARTICLE = content.Load<Texture2D>("graphics/particle");
 
-            G_SOUNDS_MUSIC = content.Load<Song> ("sounds/music");
+            G_SOUNDS_PADDLE_HIT = content.Load<SoundEffect>("sounds/paddle_hit");
+            G_SOUNDS_SCORE = content.Load<SoundEffect>("sounds/score");
+            G_SOUNDS_WALL_HIT = content.Load<SoundEffect>("sounds/wall_hit");
+            G_SOUNDS_CONFIRM = content.Load<SoundEffect>("sounds/confirm");
+            G_SOUNDS_SELECT = content.Load<SoundEffect>("sounds/select");
+            G_SOUNDS_NO_SELECT = content.Load<SoundEffect>("sounds/no-select");
+            G_SOUNDS_BRICK_HIT_1 = content.Load<SoundEffect>("sounds/brick-hit-1");
+            G_SOUNDS_BRICK_HIT_2 = content.Load<SoundEffect>("sounds/brick-hit-2");
+            G_SOUNDS_HURT = content.Load<SoundEffect>("sounds/hurt");
+            G_SOUNDS_VICTORY = content.Load<SoundEffect>("sounds/victory");
+            G_SOUNDS_RECOVER = content.Load<SoundEffect>("sounds/recover");
+            G_SOUNDS_HIGHT_SCORE = content.Load<SoundEffect>("sounds/high_score");
+            G_SOUNDS_PAUSE = content.Load<SoundEffect>("sounds/pause");
+
+            G_SOUNDS_MUSIC = content.Load<Song>("sounds/music");
+
+            G_FRAMES_PADDLES = Utils.GenerateQuadsPaddles(G_TEXTURE_MAIN);
         }
     }
 }

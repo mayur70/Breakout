@@ -1,6 +1,6 @@
 ﻿using System;
-using Breakout.GameStates;
 using FpsManager;
+using GameStates;
 using IndependentResolutionRendering;
 using InputManager;
 using Microsoft.Xna.Framework;
@@ -8,8 +8,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StateManager;
 
-namespace Breakout {
-    public class Main : Game {
+namespace Breakout
+{
+    public class Main : Game
+    {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -17,93 +19,103 @@ namespace Breakout {
 
         private GameStateManager gameStateManager;
         private IStartState startState;
+        private IPlayState playState;
+        public IPlayState IPlayState { get { return playState; } }
 
         private FPS fps;
-        public Main () {
-            graphics = new GraphicsDeviceManager (this);
+        public Main()
+        {
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            Resolution.Init (ref graphics);
-            Resolution.SetVirtualResolution (Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+            Resolution.Init(ref graphics);
+            Resolution.SetVirtualResolution(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
             // Resolution.SetResolution (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height, false);
-            Resolution.SetResolution (1280, 720, false);
-            Window.ClientSizeChanged += new EventHandler<EventArgs> (Resize);
+            Resolution.SetResolution(1280, 720, false);
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(Resize);
 
-            Components.Add (new InputHandler (this));
+            Components.Add(new InputHandler(this));
 
-            fps = new FPS (this);
-            Components.Add (fps);
+            fps = new FPS(this);
+            Components.Add(fps);
 
-            gameStateManager = new GameStateManager (this);
-            Components.Add (gameStateManager);
+            gameStateManager = new GameStateManager(this);
+            Components.Add(gameStateManager);
 
-            startState = new StartState (this);
+            startState = new StartState(this);
+            playState = new PlayState(this);
 
-            gameStateManager.ChangeState ((StartState) startState);
-
-        }
-
-        protected override void Initialize () {
-
-            base.Initialize ();
-        }
-
-        protected override void LoadContent () {
-            spriteBatch = new SpriteBatch (GraphicsDevice);
-            Constants.LoadContent (Content);
+            gameStateManager.ChangeState((StartState)startState);
 
         }
 
-        protected override void Update (GameTime gameTime) {
-            if (GamePad.GetState (PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState ().IsKeyDown (Keys.Escape))
-                Exit ();
+        protected override void Initialize()
+        {
 
-            float delta = (float) gameTime.ElapsedGameTime.TotalSeconds;
-
-            base.Update (gameTime);
+            base.Initialize();
         }
 
-        protected override void Draw (GameTime gameTime) {
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            Constants.LoadContent(Content);
 
-            GraphicsDevice.Clear (Color.Black);
+        }
 
-            Resolution.BeginDraw ();
-            spriteBatch.Begin (
+        protected override void Update(GameTime gameTime)
+        {
+            // if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //     Exit();
+
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+
+            GraphicsDevice.Clear(Color.Black);
+
+            Resolution.BeginDraw();
+            spriteBatch.Begin(
                 SpriteSortMode.Deferred,
                 null,
                 SamplerState.PointClamp,
                 DepthStencilState.None,
                 RasterizerState.CullCounterClockwise,
                 null,
-                Resolution.getTransformationMatrix ());
+                Resolution.getTransformationMatrix());
             float backgroundWidth = Constants.G_TEXTURE_BACKGROUND.Width;
             float backgroundHeight = Constants.G_TEXTURE_BACKGROUND.Height;
 
-            spriteBatch.Draw (Constants.G_TEXTURE_BACKGROUND,
-                new Vector2 (0, 0),
+            spriteBatch.Draw(Constants.G_TEXTURE_BACKGROUND,
+                new Vector2(0, 0),
                 null,
                 Color.White,
                 0f,
                 Vector2.Zero,
-                new Vector2 (Constants.VIRTUAL_WIDTH / (backgroundWidth - 1), Constants.VIRTUAL_HEIGHT / (backgroundHeight - 1)),
+                new Vector2(Constants.VIRTUAL_WIDTH / (backgroundWidth - 1), Constants.VIRTUAL_HEIGHT / (backgroundHeight - 1)),
                 SpriteEffects.None,
                 0f);
 
-            base.Draw (gameTime);
+            base.Draw(gameTime);
 
-            DisplayFPS (spriteBatch);
-            spriteBatch.End ();
+            DisplayFPS(spriteBatch);
+            spriteBatch.End();
         }
 
-        private void DisplayFPS (SpriteBatch spriteBatch) {
-            string fpsString = string.Format ("FPS: {0}", fps.FrameRate.ToString ("#.##"));
+        private void DisplayFPS(SpriteBatch spriteBatch)
+        {
+            string fpsString = string.Format("FPS: {0}", fps.FrameRate.ToString("#.##"));
 
-            spriteBatch.DrawString (Constants.G_FONTS_SMALL, fpsString, new Vector2 (5, 5), Color.Green);
+            spriteBatch.DrawString(Constants.G_FONTS_SMALL, fpsString, new Vector2(5, 5), Color.Green);
         }
 
-        private void Resize (object sender, EventArgs e) {
-            Resolution.SetVirtualResolution (Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
+        private void Resize(object sender, EventArgs e)
+        {
+            Resolution.SetVirtualResolution(Constants.VIRTUAL_WIDTH, Constants.VIRTUAL_HEIGHT);
         }
     }
 }
