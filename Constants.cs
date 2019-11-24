@@ -41,6 +41,7 @@ namespace Breakout
 
         public static List<Rectangle> G_FRAMES_PADDLES;
         public static List<Rectangle> G_FRAMES_BALLS;
+        public static List<Rectangle> G_FRAMES_BRICKS;
 
         public static void LoadContent(ContentManager content)
         {
@@ -72,6 +73,7 @@ namespace Breakout
 
             G_FRAMES_PADDLES = Utils.GenerateQuadsPaddles(G_TEXTURE_MAIN);
             G_FRAMES_BALLS = Utils.GenerateQuadsBalls(G_TEXTURE_MAIN);
+            G_FRAMES_BRICKS = Utils.GenerateQuadsBricks(G_TEXTURE_MAIN);
         }
     }
 }

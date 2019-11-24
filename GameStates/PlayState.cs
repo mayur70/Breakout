@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Breakout;
 using Breakout.Components;
 using InputManager;
@@ -17,6 +18,8 @@ namespace GameStates
 
         Paddle paddle;
         Ball ball;
+
+        List<Brick> bricks;
         bool paused;
         public PlayState(Game game) : base(game)
         {
@@ -33,8 +36,16 @@ namespace GameStates
             ball.Dy = random.Next(-60, -50);
             ball.X = Constants.VIRTUAL_WIDTH / 2 - 4;
             ball.Y = Constants.VIRTUAL_HEIGHT - 42;
+
+            bricks = LevelMaker.CreateMap(this.Game, GameRef.SpriteBatch, random);
+
             Components.Add(paddle);
             Components.Add(ball);
+
+            foreach (Brick brick in bricks)
+            {
+                Components.Add(brick);
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -64,6 +75,14 @@ namespace GameStates
                 ball.Y = paddle.BoundingBox.Y - ball.BoundingBox.Height - 1;
                 ball.Dy = -ball.Dy;
                 Constants.G_SOUNDS_PADDLE_HIT.Play();
+            }
+
+            foreach (Brick brick in bricks)
+            {
+                if (brick.InPlay && ball.Collides(brick.BoundingBox))
+                {
+                    brick.Hit();
+                }
             }
 
             if (InputHandler.IsKeyJustPressed(Keys.Escape))
