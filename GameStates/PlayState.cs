@@ -72,8 +72,17 @@ namespace GameStates
 
             if (ball.Collides(paddle.BoundingBox))
             {
-                ball.Y = paddle.BoundingBox.Y - ball.BoundingBox.Height - 1;
+                ball.Y = paddle.BoundingBox.Y - ball.BoundingBox.Height;
                 ball.Dy = -ball.Dy;
+
+                if (ball.X < paddle.BoundingBox.X + (paddle.BoundingBox.Width / 2) && paddle.Dx < 0)
+                {
+                    ball.Dx = -50 + -(8 * (paddle.BoundingBox.X + paddle.BoundingBox.Width / 2 - ball.X));
+                }
+                else if (ball.X > paddle.BoundingBox.X + (paddle.BoundingBox.Width / 2) && paddle.Dx > 0)
+                {
+                    ball.Dx = 50 + (8 * Math.Abs(paddle.BoundingBox.X + paddle.BoundingBox.Width / 2 - ball.X));
+                }
                 Constants.G_SOUNDS_PADDLE_HIT.Play();
             }
 
@@ -82,6 +91,28 @@ namespace GameStates
                 if (brick.InPlay && ball.Collides(brick.BoundingBox))
                 {
                     brick.Hit();
+
+                    if (ball.X + 2 < brick.BoundingBox.X && ball.Dx > 0)
+                    {
+                        ball.Dx = -ball.Dx;
+                        ball.X = brick.BoundingBox.X - 8;
+                    }
+                    else if (ball.X + 6 > brick.BoundingBox.X + brick.BoundingBox.Width && ball.Dx < 0)
+                    {
+                        ball.Dx = -ball.Dx;
+                        ball.X = brick.BoundingBox.X + 32;
+                    }
+                    else if (ball.Y < brick.BoundingBox.Y)
+                    {
+                        ball.Dy = -ball.Dy;
+                        ball.Y = brick.BoundingBox.Y - 8;
+                    }
+                    else
+                    {
+                        ball.Dy = -ball.Dy;
+                        ball.Y = brick.BoundingBox.Y + 16;
+                    }
+                    ball.Dy = ball.Dy * 1.02f;
                 }
             }
 

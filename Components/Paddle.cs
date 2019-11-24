@@ -10,7 +10,7 @@ namespace Breakout.Components
     {
         float x;
         float y;
-        float dx;
+        public float Dx;
         float width;
         float height;
         int skin;
@@ -25,7 +25,7 @@ namespace Breakout.Components
         {
             x = Constants.VIRTUAL_WIDTH / 2 - 32;
             y = Constants.VIRTUAL_HEIGHT - 32;
-            dx = 0;
+            Dx = 0;
             width = 64;
             height = 16;
             skin = 0;
@@ -47,24 +47,24 @@ namespace Breakout.Components
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (InputHandler.IsKeyPressed(Keys.Left))
             {
-                dx = -Constants.PADDLE_SPEED;
+                Dx = -Constants.PADDLE_SPEED;
             }
             else if (InputHandler.IsKeyPressed(Keys.Right))
             {
-                dx = Constants.PADDLE_SPEED;
+                Dx = Constants.PADDLE_SPEED;
             }
             else
             {
-                dx = 0;
+                Dx = 0;
             }
 
-            if (dx < 0)
+            if (Dx < 0)
             {
-                x = MathHelper.Max(0, x + dx * delta);
+                x = MathHelper.Max(0, x + Dx * delta);
             }
             else
             {
-                x = MathHelper.Min(Constants.VIRTUAL_WIDTH - width, x + dx * delta);
+                x = MathHelper.Min(Constants.VIRTUAL_WIDTH - width, x + Dx * delta);
             }
             base.Update(gameTime);
         }

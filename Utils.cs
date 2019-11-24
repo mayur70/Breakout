@@ -78,8 +78,6 @@ namespace Breakout
         public static List<Rectangle> GenerateQuadsBricks(Texture2D atlas)
         {
             return SliceList(GenerateQuads(atlas, 32, 16), 0, 21, 1);
-            // List<Rectangle> quads = new List<Rectangle>();
-            // return quads;
         }
     }
 }
