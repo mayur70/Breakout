@@ -40,6 +40,7 @@ namespace Breakout
         public static Song G_SOUNDS_MUSIC;
 
         public static List<Rectangle> G_FRAMES_PADDLES;
+        public static List<Rectangle> G_FRAMES_BALLS;
 
         public static void LoadContent(ContentManager content)
         {
@@ -70,6 +71,7 @@ namespace Breakout
             G_SOUNDS_MUSIC = content.Load<Song>("sounds/music");
 
             G_FRAMES_PADDLES = Utils.GenerateQuadsPaddles(G_TEXTURE_MAIN);
+            G_FRAMES_BALLS = Utils.GenerateQuadsBalls(G_TEXTURE_MAIN);
         }
     }
 }

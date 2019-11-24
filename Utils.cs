@@ -49,10 +49,29 @@ namespace Breakout
                 //huge
                 quads.Add(new Rectangle(x, y + 16, 128, 16));
 
-                //x = 0;
                 y += 32;
             }
 
+            return quads;
+        }
+
+        public static List<Rectangle> GenerateQuadsBalls(Texture2D atlas)
+        {
+            int x = 96;
+            int y = 48;
+            List<Rectangle> quads = new List<Rectangle>();
+            for (int i = 0; i <= 3; i++)
+            {
+                quads.Add(new Rectangle(x, y, 8, 8));
+                x += 8;
+            }
+            x = 96;
+            y = 56;
+            for (int i = 0; i <= 2; i++)
+            {
+                quads.Add(new Rectangle(x, y, 8, 8));
+                x += 8;
+            }
             return quads;
         }
     }
