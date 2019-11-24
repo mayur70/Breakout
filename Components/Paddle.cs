@@ -18,6 +18,8 @@ namespace Breakout.Components
         int size;
         SpriteBatch spriteBatch;
 
+        public Rectangle BoundingBox { get { return new Rectangle((int)x, (int)y, (int)width, (int)height); } }
+
 
         public Paddle(Game game, SpriteBatch spriteBatch) : base(game)
         {

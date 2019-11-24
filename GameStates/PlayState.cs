@@ -1,3 +1,4 @@
+using System;
 using Breakout;
 using Breakout.Components;
 using InputManager;
@@ -15,6 +16,7 @@ namespace GameStates
     {
 
         Paddle paddle;
+        Ball ball;
         bool paused;
         public PlayState(Game game) : base(game)
         {
@@ -26,7 +28,13 @@ namespace GameStates
         {
             base.LoadContent();
             paddle = new Paddle(this.Game, GameRef.SpriteBatch);
+            ball = new Ball(this.Game, 0, GameRef.SpriteBatch);
+            ball.Dx = random.Next(-200, 200);
+            ball.Dy = random.Next(-60, -50);
+            ball.X = Constants.VIRTUAL_WIDTH / 2 - 4;
+            ball.Y = Constants.VIRTUAL_HEIGHT - 42;
             Components.Add(paddle);
+            Components.Add(ball);
         }
 
         public override void Update(GameTime gameTime)
@@ -50,6 +58,13 @@ namespace GameStates
             }
 
             base.Update(gameTime);
+
+            if (ball.Collides(paddle.BoundingBox))
+            {
+                ball.Y = paddle.BoundingBox.Y - ball.BoundingBox.Height - 1;
+                ball.Dy = -ball.Dy;
+                Constants.G_SOUNDS_PADDLE_HIT.Play();
+            }
 
             if (InputHandler.IsKeyJustPressed(Keys.Escape))
             {
