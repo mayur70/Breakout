@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Breakout;
+using Breakout.Components;
 using InputManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -17,7 +19,7 @@ namespace GameStates
         Color hightlightedColor;
         public StartState(Game game) : base(game)
         {
-            game.Services.AddService(typeof(IStartState), this);
+            // game.Services.AddService(typeof(IStartState), this);
             hightlightedColor = new Color(103, 255, 255);
             highlighted = 0;
         }
@@ -41,7 +43,10 @@ namespace GameStates
                 Constants.G_SOUNDS_CONFIRM.Play();
                 if (highlighted == 0)
                 {
-                    manager.ChangeState((PlayState)GameRef.IPlayState);
+                    Paddle paddle = new Paddle(this.Game, GameRef.SpriteBatch);
+                    List<Brick> bricks = LevelMaker.CreateMap(this.Game, GameRef.SpriteBatch, random);
+                    ServeState serveState = new ServeState(this.Game, paddle, 3, 0, bricks);
+                    manager.ChangeState(serveState);
                 }
             }
 

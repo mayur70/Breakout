@@ -14,24 +14,28 @@ namespace Breakout.Components
         public float Dy;
         float width;
         float height;
-        int skin;
+        public int Skin;
         SpriteBatch spriteBatch;
+        public bool Active;
 
         public Rectangle BoundingBox { get { return new Rectangle((int)X, (int)Y, (int)width, (int)height); } }
 
-        public Ball(Game game, int skin, SpriteBatch spriteBatch) : base(game)
+
+        public Ball(Game game, SpriteBatch spriteBatch) : base(game)
         {
             Dx = 0;
             Dy = 0;
             width = 8;
             height = 8;
-            this.skin = skin;
+            this.Skin = 0;
             this.spriteBatch = spriteBatch;
+            Active = false;
         }
+
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Draw(Constants.G_TEXTURE_MAIN, new Vector2(X, Y), Constants.G_FRAMES_BALLS[skin], Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Constants.G_TEXTURE_MAIN, new Vector2(X, Y), Constants.G_FRAMES_BALLS[Skin], Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             base.Draw(gameTime);
         }
         public override void Initialize()
@@ -40,6 +44,8 @@ namespace Breakout.Components
         }
         public override void Update(GameTime gameTime)
         {
+            if (!Active)
+                return;
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             X += Dx * delta;
             Y += Dy * delta;

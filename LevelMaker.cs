@@ -19,7 +19,7 @@ namespace Breakout
             {
                 for (int x = 0; x < numCols; x++)
                 {
-                    Brick brick = new Brick(game, (x * 32 + 8 + (13 - numCols) * 16), y * 16, spriteBatch);
+                    Brick brick = new Brick(game, (x * 32 + 8 + (13 - numCols) * 16), (y * 16) + 20, spriteBatch);
                     bricks.Add(brick);
                 }
             }
