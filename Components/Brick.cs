@@ -12,8 +12,8 @@ namespace Breakout.Components
         float y;
         float width;
         float height;
-        int color;
-        int tier;
+        public int Color;
+        public int Tier;
         public bool InPlay;
         SpriteBatch spriteBatch;
 
@@ -26,8 +26,8 @@ namespace Breakout.Components
             this.y = y;
             width = 32;
             height = 16;
-            color = 0;
-            tier = 0;
+            Color = 0;
+            Tier = 0;
             InPlay = true;
             this.spriteBatch = spriteBatch;
         }
@@ -38,8 +38,8 @@ namespace Breakout.Components
             {
                 spriteBatch.Draw(Constants.G_TEXTURE_MAIN,
                     new Vector2(x, y),
-                    Constants.G_FRAMES_BRICKS[(color * 4) + tier],
-                    Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
+                    Constants.G_FRAMES_BRICKS[(Color * 4) + Tier],
+                    Microsoft.Xna.Framework.Color.White, 0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0f);
             }
             base.Draw(gameTime);
         }
